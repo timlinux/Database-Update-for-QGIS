@@ -1,9 +1,10 @@
 #! /bin/bash
 
+
 echo "dropping building view"
-psql -U aifdr -d osm -c "DROP VIEW vw_planet_osm_polygon;"
+psql -U timlinux -d osm -c "DROP VIEW vw_planet_osm_polygon;"
 echo "Downloading indonesia osm xml file"
 cd /var/update-osm
-wget http://download.geofabrik.de/osm/asia/indonesia.osm.bz2 -O indonesia.osm.bz2
-osm2pgsql  -U aifdr -d osm -S aifdr.style indonesia.osm.bz2
-psql -U aifdr -d osm -f create_views.sql
+wget -c http://download.geofabrik.de/osm/asia/indonesia.osm.bz2 -O indonesia.osm.bz2
+osm2pgsql -P 5433 -U timlinux -d osm -S aifdr.style indonesia.osm.bz2
+psql -U timlinux -d osm -f create_views.sql
